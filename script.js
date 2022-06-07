@@ -40,8 +40,9 @@ addFlashcard.addEventListener('click', function() {
     answer.value = '';
 } );
 
-function divMarker(text) {
+function divMarker(text, delThisIndex) {
     let div = document.createElement("div"),
+        del = document.createElement("i"),
         h2Question = document.createElement("h2"),
         h2Answer = document.createElement("h2");
 
@@ -49,17 +50,29 @@ function divMarker(text) {
         flashcards.appendChild(div);
         div.appendChild(h2Question);
         div.appendChild(h2Answer);
+        div.appendChild(del);
 
         h2Question.classList = ('question');
         h2Question.innerHTML = text.myQuestion;
         h2Answer.classList = ('answer-hide');
         h2Answer.innerHTML = text.myAnswer;
+
+        del.className = "fas fa-minus";
+        del.addEventListener("click", function() {
+            contentArray.splice(delThisIndex, 1);
+            localStorage.setItem('item', JSON.stringify(contentArray));
+            window.location.reload();
+        });
        
         div.addEventListener('click', function() {
             if(h2Answer.classList == "answer-hide") {
-                h2Answer.classList = ('answer-show');
+                h2Answer.classList = ("answer-show");
             }else{
                 h2Answer.classList = "answer-hide";
             }
         });
 }
+
+let delCard = document.querySelectorAll(".fa-minus");
+
+console.log(delCard[0]);
